@@ -22,11 +22,12 @@ L'option visant à limiter la fréquence des nouvelles connexions peut aussi êt
 ## 2.1 Etude des processus UNIX 
 
 1)</br>
+__ps -eo user,pid,%cpu,%mem,stat,start,time,command | head -n5__, cette commande permet d'afficher ps avec les colonnes dans l'ordre spécifié de l'énnoncé du tp, le head -n5 permet lui de n'afficher que les 5 première ligne.</br>
 L'information TIME correspond au temps CPU cumulé au format [JJ-]HH:MM:SS, c'est à dire le temps écoulé depuis le lancement du processus. </br>
-Les 2 processus (bash et ps), étant à TIME : 00:00:00, aucun n'a utilisé le processeur plus que l'autre.</br>
-Le premier processus lancé à été le processus Bash après le démarrage du système.</br>
-Avec la commande __uptime__, je peux voir l'heure actuel, ainsi la durée écoulé depuis le démarrage de ma machine. Ma machine est donc allumé depuis 1 heure 46 minutes. Avec la commande __ps -f__ je peux voir que bash à été démarré à 14h10, la machine a donc été démarré à 14h10. </br>
-Grâce à la commande __ps -edf | wc -l__ on peut voir que 156 processus on été lancé depuis le boot de la machine.
+__ps x -o %cpu,cmd__: Cette commande permet de trouver les processus courant, ainsi que leurs pourcentage d'usage sur le cpu, ici celui qui utilise le plus le CPU est la dernière commande que j'ai effectué, elle l'utilise à 200%.</br>
+Le premier processus lancé à été le processus systemd, c'est même dit dans son man, qu'il se lance en premier après le boot.</br>
+Avec la commande __uptime__, je peux voir l'heure actuel, ainsi la durée écoulé depuis le démarrage de ma machine. Ma machine est donc allumé depuis 1 heure 46 minutes. Avec la commande __ps -f__ je peux voir que bash à été démarré à 14h10. Avec la commande __cat /proc/stat__ je lis le fichier stat, ainsi je peux récuperer le "btime" et avec la commande __date -d @monbtime__ je peux voir que ma machine a été lancé à 14h07 et 48 secondes.</br>
+Grâce à la commande __ps -edf__ on peut voir toute la liste des processus lancés depuis le début de la machine, certains n'apparaissent pas car ils ont été stoppés, ici 705 processus au total.</br>
 
 2)</br>
 La commande __ps -l__ permet d'afficher le PPID de chaque processus. </br>
@@ -37,5 +38,22 @@ Les processus ancêtres de la commande pstree en cours d'éxécution est systemd
 
 4)</br>
 La touche "f" permet d'afficher un résumé de l'aide de top.</br>
+Le processus le plus gourmand de la machine, est la commande __top__ quand on la lance, mais sinon, c'est le processus systemd, car c'est le processus de base du systeme linux.</br>
+Afin de trier les colonnes de __top__, il faut faire appuyer sur les touches shift+p afin de trier les processus par le %CPU, shif+n quand on trie sur le PID, shift+m sur la mémoire et pour finir shift+t pour trier sur le temps d'usage cpu. Pour modifier le couleur il suffit d'appuyer sur la touche "z" mais si on veut d'autres couleurs que le rouge (couleur par défault de z), il faut faire shift+z et enfin appuyer sur une touche allant de 0 à 7 afin de choisir d'autres couleurs. Si on appuie sur "x", la colonne de tri actuel sera mise en évidence, en gras.</br>
+__Htop__ viens avec une interface par défault plus lisible, ainsi qu'une option pour afficher les arbres de parentés de chaque processus (en appuyant sur F5), cependant l'inconvénient de __htop__, est qu'il faut l'installé en plus par rapport à __top__ qui viens avec les packages de base de linux.
+
+## 3 Arrêt d'un processus
+
+Avec la commande __ps__ je peux voir que suite au CTRL+Z mes scritps sont encore en cours en arrière plan, je peux donc les forcer à se stopper en faisant la commande __kill -9 "PID de mon processus"__ ainsi avec l'option __-9__ je force quoi qu'il arrive, ma machine à stopper mon processus.</br>
+Le premier script permet s'exprimerais comme ça en langage courant : "Tant que c'est vrai, tu fais la commande __sleep__ (la commande __sleep__ permet d'effectuer une pause du nombre de seconde transmit en paramètres, ici 1), tu affiche la date (la commande __date__ permet d'afficher la date du jour), mais l'option __+%T__ permet de dire que l'on veut l'heure au format Heure, Minute, Seconde. L'option __-n__ au début de la commande permet de lui dire d'éviter les sauts de ligne.</br>
+Le second script demande lui toute les 1 seconde, d'éviter les sauts de ligne, d'écrire "toto", et de donner l'heure qu'il était il y a 5 heures dans le passé, par rapport à l'heure actuel. Ici ce qui change est surtout l'option __--date__ qui permet "d'afficher la date indiquée dans  la chaîne plutot que la date actuelle".</br>
+__man__ permet de concaténer des fichiers et de les afficher sur la sortie standard, alors que __tee__ permet de lire depuis l'entrée standard et écrire sur la sortie standard et dans des fichiers.</br>
+La commande __ls | cat__ permet d'afficher tous les fichier que j'ai dans mon répertoire.</br>
+La commande __ls -l | cat > liste__ me permet de rediriger le résultat de la commande __ls -l__ dans un fichier liste, alors que la commande __ls -l | tee liste__ le fait aussi tout en m'affichant le fichier liste.</br>
+La commande __ls -l | tee liste | wc -l__ me permet d'afficher le nombre de ligne que jai dans ma commande __ls -l__ sans m'afficher les fichiers.</br>
+Cron est une application qui permet de lancer des scripts de manière régulière, on peut donc, grâce à __cron__ lancé des scripts de manière répété à certains moments.</br>
+__tail -f__ Permet d'écouter en temps réel un fihier, et donc de voir en temps réel ce qui y est ajouté, dans le cas de fichiers log par exemple cela peut être intéréssant.</br>
+Le fichier __/etc/logrotate.conf__ permet de limiter la taille des fichiers journaux, en effectuant une rotation, il compresse les anciens, et supprime les plus vieux pour optimiser l'espace de stockage.</br>
+
 
 
