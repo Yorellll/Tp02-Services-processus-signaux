@@ -54,6 +54,8 @@ La commande __ls -l | tee liste | wc -l__ me permet d'afficher le nombre de lign
 Cron est une application qui permet de lancer des scripts de manière régulière, on peut donc, grâce à __cron__ lancé des scripts de manière répété à certains moments.</br>
 __tail -f__ Permet d'écouter en temps réel un fihier, et donc de voir en temps réel ce qui y est ajouté, dans le cas de fichiers log par exemple cela peut être intéréssant.</br>
 Le fichier __/etc/logrotate.conf__ permet de limiter la taille des fichiers journaux, en effectuant une rotation, il compresse les anciens, et supprime les plus vieux pour optimiser l'espace de stockage.</br>
+La commande __dsmeg__ sert à renvoyer les logs des drivers de chaque composant de l'ordinateur. Avec la commande __dsmeg  | grep 'CPU'__ renvoie les logs du cpu, et on peut donc voir que notre cpu est un Intel i7 12700 de 12e génération. Ensuite, avec la commande __dsmeg | grep 'eth0'__ nous donne les logs contenant la chaine de caractère 'eth0', cela correspond au port ethernet 0 et donc au driver de la carte réseau, on peut donc voir que la carte réseau est une Intel(R) PRO/1000 Network.</br>
+
 
 
 
