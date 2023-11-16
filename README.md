@@ -1,6 +1,7 @@
-Tp02-Services-processus-signaux
+# Tp02-Services-processus-signaux
 
-1.1 Connexion ssh root
+## 1.1 Connexion ssh root
+
 L'élément de la configuration SSH qu'il a été nécessaire de changer a été le PermitRootLogin et
 
 nous avons mis l'option yes, qui l'autorise simplement. Cependant, il y a aussi l'option prohibit-
@@ -23,13 +24,13 @@ grande envergure), mais aussi parce qu'elle ne désactive par son utilisation ma
 aux commandes voulue. Cela permet donc, si besoin, d'adapter le compte root à nos besoins sans
 pour autant prendre des risques de sécurité.
 
-1.2 Authentification par clef / Génération de clefs
+### 1.2 Authentification par clef / Génération de clefs
 C'est une mauvaise idée de ne pas mettre de passphrase dans un cas réel, car le passphrase peut être
 vu comme le mot de passe de la clé privée. En effet, si on en met un, la clé privée ne peut plus être
 accessible sans connaître le passphrase. Il est donc dangereux de ne pas en mettre, car n'importe qui
 ayant accès au poste pourrait subtiliser la clé privée.
 
-1.5 Sécuriser
+### 1.5 Sécuriser
 La procédure pour sécuriser l'accès à la machine par clé uniquement est de modifier comme dans le
 TP1 le fichier sshd_config, afin de mettre la ligne "PasswordAuthentication" et de lui mettre
 l'option "no". Ainsi, l'accès via mot de passe est interdit et on ne peut y accéder que via clé ssh. Les
@@ -49,7 +50,7 @@ L'option visant à limiter la fréquence des nouvelles connexions peut aussi êt
 effet, cette option permet de limiter la fréquence de tentative des mots de passe. Le problème est
 cependant que cela bloque aussi les utilisateurs lambda.
 
-2.1 Étude des processus UNIX
+## 2.1 Étude des processus UNIX
 1)
 La commande ps -eo user,pid,%cpu,%mem,stat,start,time,command | head -n5 permet d'afficher
 ps avec les colonnes dans l'ordre spécifié de l’énoncé du tp. Le head -n5 permet lui de n'afficher que
